@@ -23,10 +23,11 @@ const connectAllDb = async () => {
 
 	const ADMIN_DB_URI = `${ BASE_DB_URI }/${ ADMIN_DB_NAME }`;
 
-	adminDbConnection = initAdminDbConnection( ADMIN_DB_URI );
+	adminDbConnection = await initAdminDbConnection( ADMIN_DB_URI );
 
 	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection );
-	console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection.name );
+	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection.name );
+	console.log( 'connectAllDb', 'adminDbConnection', 'readyState', adminDbConnection.readyState );
 
 	try {
 	
@@ -40,11 +41,11 @@ const connectAllDb = async () => {
 	
 	}
 
-	connectionMap = tenants.map( tenant => {
+	connectionMap = tenants.map( async tenant => {
 
 		return {
 			
-			[ tenant.name ]: initTenantDbConnection( tenant.dbURI )
+			[ tenant.name ]: await initTenantDbConnection( tenant.dbURI ),
 		
 		};
 	

@@ -45,3 +45,4 @@ tenantSchema.index( {
 } );
 
 module.exports = mongoose.model( 'Tenant', tenantSchema );
+// module.exports = tenantSchema;

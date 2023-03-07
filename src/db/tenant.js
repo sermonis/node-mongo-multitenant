@@ -68,18 +68,19 @@ const initTenantDbConnection = DB_URL => {
 	try {
 
 		// const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
-		const db = mongoose.createConnection( DB_URL, clientOption );
+		const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
+		// const db = mongoose.createConnection( String( DB_URL ), clientOption );
 
-		db.on( 'error', console.error.bind( console, 'initTenantDbConnection MongoDB Connection Error>>: ' ) );
+		// db.on( 'error', console.error.bind( console, 'initTenantDbConnection MongoDB Connection Error>>: ' ) );
 
-		db.once( 'open', () => {
+		// db.once( 'open', () => {
 
-			console.log( 'initTenantDbConnection', 'Client MongoDB connection ok!' );
+		// 	console.log( 'initTenantDbConnection', 'Client MongoDB connection ok!' );
 
-		} );
+		// } );
 
 		// require all schemas !?
-		require( '../dbModel/user/schema' );
+		// require( '../dbModel/user/schema' );
 
 		return db;
 

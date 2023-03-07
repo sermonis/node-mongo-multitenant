@@ -1,16 +1,16 @@
 const mongoose = require( 'mongoose' );
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
 const clientOption = {
 	
 	socketTimeoutMS: 30000,
 	keepAlive: true,
-	poolSize: 5,
+	// poolSize: 5,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useFindAndModify: false,
-	useCreateIndex: true,
+	// useFindAndModify: false,
+	// useCreateIndex: true,
 
 };
 
@@ -68,23 +68,28 @@ const initAdminDbConnection = DB_URL => {
 	try {
 
 		// const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
-		const db = mongoose.createConnection( DB_URL, clientOption );
+		const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
+		// const db = mongoose.createConnection( DB_URL, clientOption );
 
-		console.log( 'initAdminDbConnection', 'db', db );
+		// console.log( 'initAdminDbConnection', 'db', db );
 		// console.log( 'initAdminDbConnection', 'DB_URL', DB_URL );
-		console.log( 'initAdminDbConnection', 'db.name', db.name );
-		console.log( 'initAdminDbConnection', 'db.readyState', db.readyState );
+		// console.log( 'initAdminDbConnection', 'db.name', db.name );
+		// console.log( 'initAdminDbConnection', 'db.readyState', db.readyState );
 
-		db.on( 'error', console.error.bind(	console, 'initAdminDbConnection MongoDB Connection Error>>: ' ) );
+		// db.on( 'error', console.error.bind(	console, 'initAdminDbConnection MongoDB Connection Error>>: ' ) );
 		
-		db.once( 'open', () => {
+		// db.once( 'open', () => {
 			
-			console.log( 'initAdminDbConnection', 'Client MongoDB connection ok!' );
+		// 	console.log( 'initAdminDbConnection', 'Client MongoDB connection ok!' );
 		
-		} );
+		// } );
+
+		// const tenantSchema = require( '../dbModel/tenant/schema' );
+		// // const model = mongoose.model( 'Tenant', tenantSchema );
+		// mongoose.model( 'Tenant', tenantSchema );
 
 		// require all schemas !?
-		require( '../dbModel/tenant/schema' );
+		// require( '../dbModel/tenant/schema' );
 
 		return db;
 
