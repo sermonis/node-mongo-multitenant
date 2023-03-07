@@ -6,11 +6,11 @@ const clientOption = {
 
 	socketTimeoutMS: 30000,
 	keepAlive: true,
-	poolSize: 1,
+	// poolSize: 1,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useFindAndModify: false,
-	useCreateIndex: true,
+	// useFindAndModify: false,
+	// useCreateIndex: true,
 
 };
 
@@ -48,14 +48,19 @@ mongoose.connection.on( 'disconnected', () => {
 /**
 ** If the Node process ends, close the Mongoose connection,
 **/
-process.on( 'SIGINT', () => {
+process.on( 'SIGINT', async () => {
 
-	mongoose.connection.close( () => {
+	// mongoose.connection.close( () => {
 
-		console.log( 'Mongoose default connection disconnected through app termination' );
-		process.exit( 0 );
+	// 	console.log( 'Mongoose default connection disconnected through app termination' );
+	// 	process.exit( 0 );
 
-	} );
+	// } );
+
+	await mongoose.connection.close();
+
+	console.log( 'Mongoose default connection disconnected through app termination' );
+	process.exit( 0 );
 
 } );
 
@@ -63,24 +68,27 @@ process.on( 'SIGINT', () => {
 ** @see https://stackoverflow.com/q/40818016
 **/
 // const initTenantDbConnection = async ( DB_URL ) => {
-const initTenantDbConnection = DB_URL => {
+const initTenantDbConnection = async ( DB_URL ) => {
 
 	try {
 
-		// const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
-		const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
+		const db = await mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
+		// const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
 		// const db = mongoose.createConnection( String( DB_URL ), clientOption );
 
-		// db.on( 'error', console.error.bind( console, 'initTenantDbConnection MongoDB Connection Error>>: ' ) );
+		db.on( 'error', console.error.bind( console, 'initTenantDbConnection MongoDB Connection Error>>: ' ) );
 
-		// db.once( 'open', () => {
+		db.once( 'open', () => {
 
-		// 	console.log( 'initTenantDbConnection', 'Client MongoDB connection ok!' );
+			console.log( 'initTenantDbConnection', 'Client MongoDB connection ok!' );
 
-		// } );
+		} );
 
 		// require all schemas !?
 		// require( '../dbModel/user/schema' );
+
+		const userSchema = require( '../dbModel/user/schema' );
+		db.model( 'User', userSchema );
 
 		return db;
 

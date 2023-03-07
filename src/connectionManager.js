@@ -5,6 +5,8 @@ const { BASE_DB_URI, ADMIN_DB_NAME } = require( './config/env.json' );
 const { initAdminDbConnection } = require( './db/admin' );
 const { initTenantDbConnection } = require( './db/tenant' );
 
+// const tenantSchema = require( './dbModel/tenant/schema' );
+
 const tenantService = require( './service/tenant' );
 
 let connectionMap;
@@ -25,6 +27,8 @@ const connectAllDb = async () => {
 
 	adminDbConnection = await initAdminDbConnection( ADMIN_DB_URI );
 
+	// adminDbConnection.model( 'Tenant', tenantSchema );
+
 	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection );
 	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection.name );
 	console.log( 'connectAllDb', 'adminDbConnection', 'readyState', adminDbConnection.readyState );
@@ -32,7 +36,7 @@ const connectAllDb = async () => {
 	try {
 	
 		tenants = await tenantService.getAllTenants( adminDbConnection );
-		console.log( 'connectAllDb', 'tenants', tenants );
+		// console.log( 'connectAllDb', 'tenants', tenants );
 	
 	} catch ( e ) {
 		
@@ -41,11 +45,11 @@ const connectAllDb = async () => {
 	
 	}
 
-	connectionMap = tenants.map( async tenant => {
+	connectionMap = tenants.map( tenant => {
 
 		return {
 			
-			[ tenant.name ]: await initTenantDbConnection( tenant.dbURI ),
+			[ tenant.name ]: initTenantDbConnection( tenant.dbURI ),
 		
 		};
 	
@@ -63,13 +67,15 @@ const connectAllDb = async () => {
 ** Get the connection information (knex instance)
 ** for the given tenant's slug.
 **/
-const getConnectionByTenant = tenantName => {
+const getConnectionByTenant = async tenantName => {
 
 	console.log( `Getting connection for ${ tenantName }` );
 
+	console.log( 'getConnectionByTenant', connectionMap );
+
 	if ( connectionMap ) {
 
-		return connectionMap[ tenantName ];
+		return await connectionMap[ tenantName ];
 
 	}
 
@@ -78,6 +84,7 @@ const getConnectionByTenant = tenantName => {
 /**
 ** Get the admin db connection.
 **/
+// const getAdminConnection = async () => {
 const getAdminConnection = () => {
 
 	if ( adminDbConnection ) {

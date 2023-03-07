@@ -48,27 +48,32 @@ mongoose.connection.on( 'disconnected', () => {
 /**
 ** If the Node process ends, close the Mongoose connection.
 **/
-process.on( 'SIGINT', () => {
+process.on( 'SIGINT', async () => {
 
-	mongoose.connection.close( () => {
+	// mongoose.connection.close( () => {
 
-		console.log( 'Mongoose default connection disconnected through app termination' );
-		process.exit( 0 );
+	// 	console.log( 'Mongoose default connection disconnected through app termination' );
+	// 	process.exit( 0 );
 
-	} );
+	// } );
+
+	await mongoose.connection.close();
+
+	console.log( 'Mongoose default connection disconnected through app termination' );
+	process.exit( 0 );
 
 } );
 
 /**
 ** @see https://stackoverflow.com/q/40818016
 **/
-// const initAdminDbConnection = async ( DB_URL ) => {
-const initAdminDbConnection = DB_URL => {
+const initAdminDbConnection = async ( DB_URL ) => {
+// const initAdminDbConnection = DB_URL => {
 
 	try {
 
-		// const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
-		const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
+		const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
+		// const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
 		// const db = mongoose.createConnection( DB_URL, clientOption );
 
 		// console.log( 'initAdminDbConnection', 'db', db );
@@ -76,15 +81,16 @@ const initAdminDbConnection = DB_URL => {
 		// console.log( 'initAdminDbConnection', 'db.name', db.name );
 		// console.log( 'initAdminDbConnection', 'db.readyState', db.readyState );
 
-		// db.on( 'error', console.error.bind(	console, 'initAdminDbConnection MongoDB Connection Error>>: ' ) );
+		db.on( 'error', console.error.bind(	console, 'initAdminDbConnection MongoDB Connection Error>>: ' ) );
 		
-		// db.once( 'open', () => {
+		db.once( 'open', () => {
 			
-		// 	console.log( 'initAdminDbConnection', 'Client MongoDB connection ok!' );
+			console.log( 'initAdminDbConnection', 'Client MongoDB connection ok!' );
 		
-		// } );
+		} );
 
-		// const tenantSchema = require( '../dbModel/tenant/schema' );
+		const tenantSchema = require( '../dbModel/tenant/schema' );
+		db.model( 'Tenant', tenantSchema );
 		// // const model = mongoose.model( 'Tenant', tenantSchema );
 		// mongoose.model( 'Tenant', tenantSchema );
 

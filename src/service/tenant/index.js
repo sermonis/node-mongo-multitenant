@@ -1,5 +1,5 @@
 const { BASE_DB_URI } = require( '../../config/env.json' );
-const Tenant = require( '../../dbModel/tenant/schema' );
+// const Tenant = require( '../../dbModel/tenant/schema' );
 
 /**
 ** 
@@ -12,9 +12,9 @@ const getAllTenants = async adminDbConnection => {
 		// console.log( 'getAllTenants', 'adminDbConnection', adminDbConnection.model );
 		// console.log( 'getAllTenants', 'adminDbConnection.readyState', adminDbConnection.readyState );
 
-		const Tenant = await adminDbConnection.model( 'Tenant' );
-		// const tenants = await Tenant.find( {} );
+		const Tenant = adminDbConnection.model( 'Tenant' );
 		const tenants = await Tenant.find();
+		// const tenants = await Tenant.find();
 	
 		console.log( 'getAllTenants', 'tenants', tenants );
 

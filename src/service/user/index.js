@@ -7,8 +7,8 @@ const getAllUsers = async tenantDbConnection => {
 
 	try {
 
-		const User = await tenantDbConnection.model( эUser );
-		const users = await User.find( {} );
+		const User = tenantDbConnection.model( 'User' );
+		const users = await User.find();
 
 		console.log( 'getAllUsers', 'users', users );
 
