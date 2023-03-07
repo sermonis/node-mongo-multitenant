@@ -62,13 +62,13 @@ process.on( 'SIGINT', () => {
 /**
 ** @see https://stackoverflow.com/q/40818016
 **/
-const initAdminDbConnection = async ( DB_URL ) => {
-// const initAdminDbConnection = DB_URL => {
+// const initAdminDbConnection = async ( DB_URL ) => {
+const initAdminDbConnection = DB_URL => {
 
 	try {
 
-		const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
-		// const db = mongoose.createConnection( DB_URL, clientOption );
+		// const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
+		const db = mongoose.createConnection( DB_URL, clientOption );
 
 		console.log( 'initAdminDbConnection', 'db', db );
 		// console.log( 'initAdminDbConnection', 'DB_URL', DB_URL );
