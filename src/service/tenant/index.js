@@ -16,7 +16,7 @@ const getAllTenants = async adminDbConnection => {
 		const tenants = await Tenant.find();
 		// const tenants = await Tenant.find();
 	
-		console.log( 'getAllTenants', 'tenants', tenants );
+		// console.log( 'getAllTenants', 'tenants', tenants );
 
 		return tenants;
 

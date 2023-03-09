@@ -1,16 +1,15 @@
 const mongoose = require( 'mongoose' );
 
-// mongoose.Promise = global.Promise;
-
 const clientOption = {
 	
-	socketTimeoutMS: 30000,
-	keepAlive: true,
-	// poolSize: 5,
+	keepAlive: true,	
 	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	// useFindAndModify: false,
-	// useCreateIndex: true,
+	useUnifiedTopology: true,	
+
+	// autoIndex: true,
+
+	connectTimeoutMS: 10000,
+	socketTimeoutMS: 30000,
 
 };
 
@@ -72,7 +71,10 @@ const initAdminDbConnection = async ( DB_URL ) => {
 
 	try {
 
-		const db = await mongoose.createConnection( DB_URL, clientOption ).asPromise();
+		const db = await mongoose
+			.createConnection( DB_URL, clientOption )
+			.asPromise();
+
 		// const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
 		// const db = mongoose.createConnection( DB_URL, clientOption );
 

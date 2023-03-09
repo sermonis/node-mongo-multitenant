@@ -20,8 +20,8 @@ const connectAllDb = async () => {
 
 	let tenants;
 
-	console.log( 'connectAllDb', 'BASE_DB_URI' , BASE_DB_URI );
-	console.log( 'connectAllDb', 'ADMIN_DB_NAME', ADMIN_DB_NAME );
+	// console.log( 'connectAllDb', 'BASE_DB_URI' , BASE_DB_URI );
+	// console.log( 'connectAllDb', 'ADMIN_DB_NAME', ADMIN_DB_NAME );
 
 	const ADMIN_DB_URI = `${ BASE_DB_URI }/${ ADMIN_DB_NAME }`;
 
@@ -31,7 +31,7 @@ const connectAllDb = async () => {
 
 	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection );
 	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection.name );
-	console.log( 'connectAllDb', 'adminDbConnection', 'readyState', adminDbConnection.readyState );
+	// console.log( 'connectAllDb', 'adminDbConnection', 'readyState', adminDbConnection.readyState );
 
 	try {
 	
@@ -59,7 +59,7 @@ const connectAllDb = async () => {
 	
 	}, {} );
 
-	console.log( 'connectAllDb', 'connectionMap', connectionMap );
+	// console.log( 'connectAllDb', 'connectionMap', connectionMap );
 
 };
 
@@ -69,9 +69,9 @@ const connectAllDb = async () => {
 **/
 const getConnectionByTenant = async tenantName => {
 
-	console.log( `Getting connection for ${ tenantName }` );
+	// console.log( `Getting connection for ${ tenantName }` );
 
-	console.log( 'getConnectionByTenant', connectionMap );
+	// console.log( 'getConnectionByTenant', connectionMap );
 
 	if ( connectionMap ) {
 
@@ -89,7 +89,7 @@ const getAdminConnection = () => {
 
 	if ( adminDbConnection ) {
 
-		console.log( 'Getting adminDbConnection' );
+		// console.log( 'Getting adminDbConnection' );
 
 		return adminDbConnection;
 
@@ -110,7 +110,7 @@ const getConnection = () => {
   
 	if ( !conn ) {
 
-	  throw new Error( 'Connection is not set for any tenant database' );
+		throw new Error( 'Connection is not set for any tenant database' );
 
 	}
   

@@ -36,7 +36,7 @@ const resolveTenant = ( req, res, next ) => {
 
 		const tenantDbConnection = getConnectionByTenant( tenant );
 
-		console.log( 'resolveTenant', 'tenantDbConnection', tenantDbConnection && tenantDbConnection.name );
+		// console.log( 'resolveTenant', 'tenantDbConnection', tenantDbConnection && tenantDbConnection.name );
 		
 		nameSpace.set( 'connection', tenantDbConnection );
 		
@@ -60,7 +60,7 @@ const setAdminDb = ( req, res, next ) => {
 
 		const adminDbConnection = getAdminConnection();
 
-		console.log( 'setAdminDb', 'adminDbConnection', adminDbConnection.name );
+		// console.log( 'setAdminDb', 'adminDbConnection', adminDbConnection.name );
 
 		nameSpace.set( 'connection', adminDbConnection );
 
