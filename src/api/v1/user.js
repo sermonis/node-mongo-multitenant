@@ -24,7 +24,7 @@ const fetchAll = async ( req, res ) => {
 
 	try {
 
-		const dbConnection = getConnection();
+		const dbConnection = await getConnection();
 		console.log( 'fetchAll dbConnection', dbConnection.name );
 
 		const users = await userService.getAllUsers( dbConnection );
