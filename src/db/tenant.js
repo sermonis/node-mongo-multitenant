@@ -49,13 +49,6 @@ mongoose.connection.on( 'disconnected', () => {
 **/
 process.on( 'SIGINT', async () => {
 
-	// mongoose.connection.close( () => {
-
-	// 	console.log( 'Mongoose default connection disconnected through app termination' );
-	// 	process.exit( 0 );
-
-	// } );
-
 	await mongoose.connection.close();
 
 	console.log( 'Mongoose default connection disconnected through app termination' );
@@ -75,9 +68,6 @@ const initTenantDbConnection = async ( DB_URL ) => {
 			.createConnection( String( DB_URL ), clientOption )
 			.asPromise();
 
-		// const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
-		// const db = mongoose.createConnection( String( DB_URL ), clientOption );
-
 		db.on( 'error', console.error.bind( console, 'initTenantDbConnection MongoDB Connection Error>>: ' ) );
 
 		db.once( 'open', () => {
@@ -86,10 +76,7 @@ const initTenantDbConnection = async ( DB_URL ) => {
 
 		} );
 
-		// require all schemas !?
-		// require( '../dbModel/user/schema' );
-
-		const userSchema = require( '../dbModel/user/schema' );
+		const userSchema = require( '../schema/user' );
 		db.model( 'User', userSchema );
 
 		return db;

@@ -49,13 +49,6 @@ mongoose.connection.on( 'disconnected', () => {
 **/
 process.on( 'SIGINT', async () => {
 
-	// mongoose.connection.close( () => {
-
-	// 	console.log( 'Mongoose default connection disconnected through app termination' );
-	// 	process.exit( 0 );
-
-	// } );
-
 	await mongoose.connection.close();
 
 	console.log( 'Mongoose default connection disconnected through app termination' );
@@ -67,21 +60,12 @@ process.on( 'SIGINT', async () => {
 ** @see https://stackoverflow.com/q/40818016
 **/
 const initAdminDbConnection = async ( DB_URL ) => {
-// const initAdminDbConnection = DB_URL => {
 
 	try {
 
 		const db = await mongoose
 			.createConnection( DB_URL, clientOption )
 			.asPromise();
-
-		// const db = mongoose.createConnection( String( DB_URL ), clientOption ).asPromise();
-		// const db = mongoose.createConnection( DB_URL, clientOption );
-
-		// console.log( 'initAdminDbConnection', 'db', db );
-		// console.log( 'initAdminDbConnection', 'DB_URL', DB_URL );
-		// console.log( 'initAdminDbConnection', 'db.name', db.name );
-		// console.log( 'initAdminDbConnection', 'db.readyState', db.readyState );
 
 		db.on( 'error', console.error.bind(	console, 'initAdminDbConnection MongoDB Connection Error>>: ' ) );
 		
@@ -91,19 +75,13 @@ const initAdminDbConnection = async ( DB_URL ) => {
 		
 		} );
 
-		const tenantSchema = require( '../dbModel/tenant/schema' );
+		const tenantSchema = require( '../schema/tenant' );
 		db.model( 'Tenant', tenantSchema );
-		// // const model = mongoose.model( 'Tenant', tenantSchema );
-		// mongoose.model( 'Tenant', tenantSchema );
-
-		// require all schemas !?
-		// require( '../dbModel/tenant/schema' );
 
 		return db;
 
 	} catch ( error ) {
 		
-		// console.log( 'DB_URL', 'error', DB_URL );
 		console.log( 'initAdminDbConnection', 'error', error );
 	
 	}

@@ -5,8 +5,6 @@ const { BASE_DB_URI, ADMIN_DB_NAME } = require( './config/env.json' );
 const { initAdminDbConnection } = require( './db/admin' );
 const { initTenantDbConnection } = require( './db/tenant' );
 
-// const tenantSchema = require( './dbModel/tenant/schema' );
-
 const tenantService = require( './service/tenant' );
 
 let connectionMap;
@@ -20,23 +18,13 @@ const connectAllDb = async () => {
 
 	let tenants;
 
-	// console.log( 'connectAllDb', 'BASE_DB_URI' , BASE_DB_URI );
-	// console.log( 'connectAllDb', 'ADMIN_DB_NAME', ADMIN_DB_NAME );
-
 	const ADMIN_DB_URI = `${ BASE_DB_URI }/${ ADMIN_DB_NAME }`;
 
 	adminDbConnection = await initAdminDbConnection( ADMIN_DB_URI );
 
-	// adminDbConnection.model( 'Tenant', tenantSchema );
-
-	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection );
-	// console.log( 'connectAllDb', 'adminDbConnection', adminDbConnection.name );
-	// console.log( 'connectAllDb', 'adminDbConnection', 'readyState', adminDbConnection.readyState );
-
 	try {
 	
 		tenants = await tenantService.getAllTenants( adminDbConnection );
-		// console.log( 'connectAllDb', 'tenants', tenants );
 	
 	} catch ( e ) {
 		
@@ -59,8 +47,6 @@ const connectAllDb = async () => {
 	
 	}, {} );
 
-	// console.log( 'connectAllDb', 'connectionMap', connectionMap );
-
 };
 
 /**
@@ -68,10 +54,6 @@ const connectAllDb = async () => {
 ** for the given tenant's slug.
 **/
 const getConnectionByTenant = async tenantName => {
-
-	// console.log( `Getting connection for ${ tenantName }` );
-
-	// console.log( 'getConnectionByTenant', connectionMap );
 
 	if ( connectionMap ) {
 
@@ -84,12 +66,9 @@ const getConnectionByTenant = async tenantName => {
 /**
 ** Get the admin db connection.
 **/
-// const getAdminConnection = async () => {
 const getAdminConnection = () => {
 
 	if ( adminDbConnection ) {
-
-		// console.log( 'Getting adminDbConnection' );
 
 		return adminDbConnection;
 

@@ -1,7 +1,7 @@
 const express = require( 'express' );
 
 // Connection resolver for tenant.
-const connectionResolver = require( '../../middlewares/connectionResolver' );
+const connectionResolver = require( '../../middleware/connectionResolver' );
 
 // Mounting routes.
 const v1Routes = express.Router();
@@ -15,7 +15,7 @@ v1Routes.post( '/admin/tenant', adminApi.create );
 v1Routes.get( '/admin/tenant', adminApi.fetchAll );
 
 // User
-const userApi = require( './user');
+const userApi = require( './user' );
 v1Routes.post( '/tenant/user/signup', userApi.signUp );
 v1Routes.get( '/tenant/user', userApi.fetchAll );
 

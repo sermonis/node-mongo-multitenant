@@ -5,11 +5,9 @@ const create = async ( req, res ) => {
 
 	try {
 
-		const dbConnection = getConnection();
-		
-		// console.log( 'create dbConnection', dbConnection.name );
-
+		const dbConnection = getConnection();		
 		const tenant = await tenantService.createTenant( dbConnection, req.body );
+
 		res.status( 200 ).json( { success: true, tenant } );
 
 	} catch ( err ) {
@@ -27,10 +25,8 @@ const fetchAll = async ( req, res ) => {
 	try {
 
 		const dbConnection = getConnection();
-
-		// console.log( 'fetchAll dbConnection', dbConnection.name );
-
 		const tenants = await tenantService.getAllTenants( dbConnection );
+
 		res.status( 200 ).json( { success: true, tenants } );
 
 	} catch ( err ) {
